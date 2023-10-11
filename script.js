@@ -22,6 +22,10 @@ const ifFloatReturnTwoDecimals = function (n) {
     return n;
 }
 
+const isFloat = function (n) {
+    return Number(n) === n && n % 1 !== 0
+}
+
 const display = document.querySelector('.display');
 display.textContent = '';
 const buttons = document.querySelectorAll('.buttons');
@@ -45,7 +49,8 @@ const operate = function (a, b, op, newOperator) {
     result = ifFloatReturnTwoDecimals(result);
 
     display.textContent = result;
-    firstNumber = result;
+    
+    firstNumber = result.toString();
     operator = newOperator;
     secondNumber = '';
 }
@@ -59,9 +64,17 @@ function displayContent(e) {
         else
             operate(firstNumber, secondNumber, operator, number);
     else if(operator === '')
-        firstNumber += number;
+        if(number === '.' && (isFloat(Number(firstNumber)) || firstNumber.charAt(firstNumber.length - 1) === '.')) {
+            // do nothing
+        }
+        else
+            firstNumber += number;
     else
-        secondNumber += number;
+        if(number === '.' && (isFloat(Number(secondNumber)) || secondNumber.charAt(secondNumber.length -1) === '.')) {
+            // do nothing
+        }
+        else
+            secondNumber += number;
 
     display.textContent = firstNumber + operator + secondNumber;
 }
@@ -71,6 +84,17 @@ function clearContent () {
     firstNumber = '';
     secondNumber = '';
     operator = '';
+}
+
+function backspace () {
+    console.log('backs[ace');
+    if (secondNumber !== '')
+        secondNumber = secondNumber.slice(0, -1);
+    else if (operator !== '')
+        operator = '';
+    else
+        firstNumber = firstNumber.slice(0, -1);
+    display.textContent = firstNumber + operator + secondNumber;
 }
 
 buttons.forEach((button) => {
@@ -88,3 +112,6 @@ const equalsButton = document.querySelector('#equalsButton');
 equalsButton.addEventListener('click', () => {
     operate(firstNumber, secondNumber, operator, '');
 });
+
+const deleteButton = document.querySelector('#deleteButton');
+deleteButton.addEventListener('click', backspace);
