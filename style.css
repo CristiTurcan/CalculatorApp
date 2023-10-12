@@ -39,6 +39,10 @@ body {
     font-weight: 500;
 }
 
+.controlButtons button:active {
+    background-color: rgb(174, 167, 167);
+}
+
 .buttons {
     display: flex;
     flex-flow: row wrap;
@@ -52,6 +56,10 @@ body {
     font-size: 28px;
 }
 
+.buttons button:active {
+    background-color: rgb(54, 53, 53);
+}
+
 .operationButtons {
     display: flex;
     flex-direction: column;
@@ -60,6 +68,10 @@ body {
 .operationButtons button {
     background-color: rgb(200, 131, 1);
     font-size: 33px;
+}
+
+.operationButtons button:active {
+    background-color: rgb(174, 114, 2);
 }
 
 button {
